@@ -1,0 +1,25 @@
+name: Daily Commit
+
+on:
+  schedule:
+    - cron: '30 2 * * *' # Runs daily at 2:30 AM UTC
+
+jobs:
+  daily_update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Add a file or modify an existing one
+        run: |
+          echo "Daily update $(date)" >> daily_updates.txt
+          git add daily_updates.txt
+
+      - name: Commit changes (rajalakshmi.thiyagarajan@straive.com)
+        uses: stefanzweifel/git-cli-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: "Automated daily update"
+          commit_user_name: "GitHub Actions Bot"
+          commit_user_email: "rajalakshmi.thiyagarajan@straive.com" # Your email here
